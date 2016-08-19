@@ -1,47 +1,91 @@
 package mainclasses;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import lines.TPNightmare;
 
 public class TestPrepGUI {
-	private JFrame intro;
 	
-	JLabel[] labels = new JLabel[18];
-	private JFrame nightmare;
-	private JPanel sceneA;
-	private JPanel talkA;
-	private JPanel cont;
-	private JButton contButton;
+	private JFrame frame;
 	
-	//dialogue
-	private JLabel di1 = new JLabel(TPNightmare.di1);
-	private JLabel di2 = new JLabel(TPNightmare.di2);
-	private JLabel di3 = new JLabel(TPNightmare.di3);
-	private JLabel di4 = new JLabel(TPNightmare.di4);
-	private JLabel di5 = new JLabel(TPNightmare.di5);
-	private JLabel di6 = new JLabel(TPNightmare.di6);
-	private JLabel di7 = new JLabel(TPNightmare.di7);
-	private JLabel di8 = new JLabel(TPNightmare.di8);
-	//description
-	private JLabel de1 = new JLabel(TPNightmare.de1);
-	private JLabel de2 = new JLabel(TPNightmare.de2);
-	private JLabel de3 = new JLabel(TPNightmare.de3);
-	private JLabel de4 = new JLabel(TPNightmare.de4);
-	private JLabel de5 = new JLabel(TPNightmare.de5);
-	private JLabel de6 = new JLabel(TPNightmare.de6);
-	private JLabel de7 = new JLabel(TPNightmare.de7);
-	private JLabel de8 = new JLabel(TPNightmare.de8);
-	private JLabel de9 = new JLabel(TPNightmare.de9);
-	private JLabel de10 = new JLabel(TPNightmare.de10);
+	//Intro GUI
+	private JPanel intro;
 	
+	private JTextField fName;
+	private JTextField lName;
+	private JLabel askFN;
+	private JLabel askLN;
+	private JButton next;
 	
+	//Nightmare sequence
+	private JPanel nightmare;
+	
+	private TPNightmare chapt1;
+	private int i;
+	
+	private JPanel image;
+	private JPanel gamePane;
+	private JPanel dialogue;
+	private JPanel text;
+	private JLabel desc;
+	private JLabel speaker;
+	private JLabel blankA, blankB;
+	private JButton cont;
+	private static final int WIDTH = 1366;
+	private static final int HEIGHT = 768;	
+	
+	public TestPrepGUI() {
+		chapt1 = new TPNightmare();
+		frame = new JFrame("Firestorm");
+		image = new JPanel();
+		cont = new JButton("Continue");
+		nightmare = new JPanel();
+		dialogue = new JPanel();
+		image = new JPanel();
+		text = new JPanel();
+		desc = new JLabel();
+		speaker = new JLabel();
+		blankA = new JLabel();
+		blankB = new JLabel();
+		
+		//Screen size: 1366 x 768
+		frame.setSize(1000, 700);
+		frame.add(nightmare);
+		nightmare.setLayout(new GridLayout(2, 1));
+		nightmare.add(image);
+		nightmare.add(dialogue);
+		//dialogue.setPreferredSize(new Dimension(1366, 256));
+		dialogue.setLayout(new BorderLayout());
+		dialogue.add(desc, BorderLayout.CENTER);
+		dialogue.add(cont, BorderLayout.PAGE_END);
+		dialogue.add(speaker, BorderLayout.PAGE_START);
+		
+		desc.setFont(new Font("Arial", Font.PLAIN, 24));
+		desc.setHorizontalAlignment(SwingConstants.CENTER);
+		desc.setText(chapt1.getLine(0));
+		
+		speaker.setFont(new Font("Arial", Font.ITALIC, 20));
+		speaker.setText("");
+		
+		cont.addActionListener(new Listener());
+		
+		frame.setVisible(true);
+		dialogue.setVisible(true);
+		image.setVisible(true);
+		nightmare.setVisible(true);
+		
+		
+	}
 	
 	private JFrame firstDay;
 	private JFrame classroom;
@@ -55,12 +99,36 @@ public class TestPrepGUI {
 	private class Listener implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
+		public void actionPerformed(ActionEvent e) {
+			Object x = e.getSource();
+				if(x == cont) {
+					if(i < chapt1.lines.size()-1) {
+						i++;
+						desc.setText(chapt1.getLine(i));
+						System.out.println(i);
+						if(i == 1||i == 2||i == 4||i == 12||i == 15||i == 17){
+							speaker.setText("You");
+						}
+						else if(i == 9||i == 10){
+							speaker.setText("Abigail:");
+						}
+						else{
+							speaker.setText("");
+						}
+					}
+					
+				}
+				
+			}
 			
 		}
-}
+	private class ListenerB implements ActionListener {
 
-
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			
+		}
+		
+	}
 	
 }

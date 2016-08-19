@@ -1,15 +1,19 @@
 package characters;
 
+import java.util.ArrayList;
+
 public class Player implements People {
 	
 	private String fName;
 	private String lName;
 	private int gender;
+	ArrayList<Integer> choices;
 	
 	public Player(String fName, String lName, int gender) {
 		this.fName = fName;
 		this.lName = lName;
 		this.gender = gender;
+		choices = new ArrayList<Integer>();
 	}
 	
 	public Player() {
@@ -51,6 +55,10 @@ public class Player implements People {
 		else {
 			return "them";
 		}
+	}
+	
+	public void addChoice(int num) {
+		choices.add(num);
 	}
 
 }
